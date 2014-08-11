@@ -1,0 +1,36 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btn_videoViewPlay"
+        android:layout_width="match_parent"
+        android:layout_height="55.0dip"
+        android:text="VideoView" />
+
+    <Button
+        android:id="@+id/btn_videoViewPlay1"
+        android:layout_width="match_parent"
+        android:layout_height="55.0dip"
+        android:text="VideoView1" />
+
+    <Button
+        android:id="@+id/btn_videoViewPlay2"
+        android:layout_width="match_parent"
+        android:layout_height="55.0dip"
+        android:text="VideoView2" />
+
+    <Button
+        android:id="@+id/btn_videoViewPlay3"
+        android:layout_width="match_parent"
+        android:layout_height="55.0dip"
+        android:text="VideoView3" />
+
+    <Button
+        android:id="@+id/btn_videoViewPlay4"
+        android:layout_width="match_parent"
+        android:layout_height="55.0dip"
+        android:text="VideoView4" />
+</LinearLayout>

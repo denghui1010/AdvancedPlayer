@@ -1,0 +1,18 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.huilan.library_videoplay">
+
+    <application android:allowBackup="true"
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher"
+        android:theme="@style/AppTheme">
+
+<!--
+    使用时,需要在AndroidManifest.xml中添加下面内容
+    <activity
+            android:name="com.huilan.library_videoplay.VideoViewPlay"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoTitleBar" />
+-->
+    </application>
+
+</manifest>
