@@ -1,11 +1,13 @@
 language: android
+android:
+  components:
+    # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+    # - platform-tools
+    # - tools
 
-before_install:
-- wget -P target/travis https://raw.githubusercontent.com/goodow/maven/master/settings.xml
-- sudo apt-get update -qq
-- if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch > /dev/null; fi
-- wget http://dl.google.com/android/android-sdk_r22.6.2-linux.tgz
-- tar -zxf android-sdk_r22.6.2-linux.tgz
-- export ANDROID_HOME=$PWD/android-sdk-linux
-- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-- echo yes | android update sdk --filter android-19,build-tools-19.1.0 --no-ui --force > /dev/null
+    # The BuildTools version used by your project
+    - build-tools-19.1.0
+
+    # The SDK version used to compile your project
+    - android-19
