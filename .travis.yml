@@ -1,4 +1,4 @@
-language: java
+language: android
 
 before_install:
 - wget -P target/travis https://raw.githubusercontent.com/goodow/maven/master/settings.xml
