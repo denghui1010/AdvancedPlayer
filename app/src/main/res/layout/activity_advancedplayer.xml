@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
+
 
     <com.huilan.library_videoplay.view.SuperVideoView
         android:id="@+id/vv_video_view"
@@ -10,31 +11,17 @@
         android:layout_gravity="center"
         android:fitsSystemWindows="true" />
 
-    <LinearLayout
+    <include
+        android:id="@+id/in_videoTop"
+        layout="@layout/advancedplayer_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone" >
+        android:layout_height="@dimen/lb_video_top_height" />
 
-        <Button
-            android:id="@+id/btnplay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="播放" />
-
-        <Button
-            android:id="@+id/btnpause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="暂停" />
-
-        <Button
-            android:id="@+id/btnstop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="停止" />
-    </LinearLayout>
+    <include
+        android:id="@+id/in_videoBottom"
+        layout="@layout/advancedplayer_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lb_video_bottom_height"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

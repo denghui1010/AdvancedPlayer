@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Handler;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -16,6 +18,8 @@ public class SuperVideoView extends SurfaceView {
 
     private final Context mContext;
     private SurfaceHolder mSurfaceHolder;
+    private boolean screenLock;
+    private PlayController controller;
 
     public SuperVideoView(Context context) {
         super(context);
@@ -40,17 +44,33 @@ public class SuperVideoView extends SurfaceView {
         getHolder().addCallback(mSHCallback);
     }
 
-    SurfaceHolder.Callback mSHCallback = new SurfaceHolder.Callback() {
+    private Handler handler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            int pos;
+            switch (msg.what) {
+                case 101:
+                    break;
+                case 102:
+                    if (controller != null) {
+//                        System.out.println("播放进度-->" + mMediaPlayer.getCurrentPosition() + "," + mMediaPlayer.getDuration());
+                        controller.currentProgress(mMediaPlayer.getCurrentPosition(), mMediaPlayer.getDuration());
+                    }
+                    handler.sendEmptyMessageDelayed(102, 500);
+                    break;
+            }
+        }
+    };
+    private SurfaceHolder.Callback mSHCallback = new SurfaceHolder.Callback() {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
             mSurfaceHolder = holder;
             openVideo();
+            handler.sendEmptyMessageDelayed(102, 500);
         }
 
         @Override
-        public void surfaceChanged(SurfaceHolder holder, int format, int width,
-                                   int height) {
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         }
 
         @Override
@@ -65,6 +85,7 @@ public class SuperVideoView extends SurfaceView {
         @Override
         public void onPrepared(MediaPlayer mp) {
             mMediaPlayer.start();
+            handler.sendEmptyMessageDelayed(102, 1000);
         }
     };
     /**
@@ -123,30 +144,138 @@ public class SuperVideoView extends SurfaceView {
         }
     }
 
+    private int getCurrentProgress() {
+        if (isPlaying()) {
+            return mMediaPlayer.getCurrentPosition();
+        } else {
+            return 0;
+        }
+    }
+
     public void setVideoPath(String path) {
         setVideoURI(Uri.parse(path));
     }
 
     public void setVideoURI(Uri uri) {
+        mUri = uri;
         openVideo();
         requestLayout();
         invalidate();
     }
 
     /**
-     * release the media player in any state
+     * 视频是否在播放
+     *
+     * @return true:播放,false:暂停
      */
-    private void release() {
+    public boolean isPlaying() {
+        if (mMediaPlayer == null) {
+            return false;
+        } else {
+            return mMediaPlayer.isPlaying();
+        }
+    }
+
+    /**
+     * 开始
+     */
+    public void start() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.start();
+            handler.sendEmptyMessageDelayed(102, 500);
+            System.out.println("开始播放了....");
+        }
+    }
+
+    /**
+     * 暂停
+     */
+    public void pause() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.pause();
+        }
+    }
+
+    /**
+     * 停止
+     */
+    public void stop() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.stop();
+        }
+    }
+
+    /**
+     * 释放
+     */
+    public void release() {
         if (mMediaPlayer != null) {
             mMediaPlayer.reset();
             mMediaPlayer.release();
             mMediaPlayer = null;
-//            mPendingSubtitleTracks.clear();
-//            mCurrentState = STATE_IDLE;
-//            if (cleartargetstate) {
-//                mTargetState = STATE_IDLE;
-//            }
         }
+    }
+
+    /**
+     * 销毁当前的播放控件
+     */
+    public void onDestroy() {
+        if (handler != null) {
+            handler.removeMessages(102);
+            handler = null;
+        }
+        release();
+        controller = null;
+        mSurfaceHolder = null;
+        System.out.println("SuperVideoView 销毁");
+    }
+
+    /**
+     * 视频跳转
+     *
+     * @param msec 跳转到第几秒
+     */
+    public void seekTo(int msec) {
+//        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.seekTo(msec);
+        }
+    }
+
+    /**
+     * 设置屏幕是否锁定
+     *
+     * @param screenLock true:锁定,false:未锁定
+     */
+    public void setScreenLock(boolean screenLock) {
+        this.screenLock = screenLock;
+    }
+
+    /**
+     * 获取屏幕锁定状态
+     *
+     * @return true:锁定,false:未锁定
+     */
+    public boolean isScreenLock() {
+        return screenLock;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (screenLock) {
+            return true;
+        }
+
+
+        return super.onTouchEvent(event);
+    }
+
+    public void setOnProgressListener(PlayController controller) {
+        this.controller = controller;
+    }
+
+    public interface PlayController {
+        void currentProgress(int current, int total);
     }
 
 }
