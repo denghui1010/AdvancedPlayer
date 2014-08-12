@@ -1,4 +1,4 @@
 language: groovy
 
 before_install:
-  -chmod 777 /home/travis/build.sh
+  - chmod 777 /home/travis/build.sh
