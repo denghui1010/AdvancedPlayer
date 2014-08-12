@@ -11,10 +11,10 @@
         android:text="VideoView" />
 
     <Button
-        android:id="@+id/btn_videoViewPlay1"
+        android:id="@+id/btn_advancedplayer"
         android:layout_width="match_parent"
         android:layout_height="55.0dip"
-        android:text="VideoView1" />
+        android:text="AdvancedPlayer" />
 
     <Button
         android:id="@+id/btn_videoViewPlay2"

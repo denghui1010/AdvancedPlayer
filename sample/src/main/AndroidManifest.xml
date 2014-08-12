@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.huilan.library_videoplay.sample">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -19,7 +20,10 @@
             android:name="com.huilan.library_videoplay.VideoViewPlay"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoTitleBar" />
-
+        <activity
+            android:name="com.huilan.library_videoplay.AdvancedPlayer"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoTitleBar" />
     </application>
 
 </manifest>
