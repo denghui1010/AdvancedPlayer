@@ -10,4 +10,5 @@ android:
     - '.+'
 script:
   # Sonatype bypass
+  - chmod +x gradlew
   - ./gradlew clean assemble check
